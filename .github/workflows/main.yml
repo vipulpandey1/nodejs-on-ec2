@@ -21,9 +21,6 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build
-        run: npm run build
-
       - name: Deploy to S3 bucket
         uses: jakejarvis/s3-sync-action@master
         env:
@@ -33,4 +30,4 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Sync to S3
-        run: aws s3 sync ./path/to/build/folder s3://${{ secrets.AWS_S3_BUCKET }} --delete --region ${{ secrets.AWS_REGION }} --debug
+        run: aws s3 sync ./ s3://${{ secrets.AWS_S3_BUCKET }} --delete --region ${{ secrets.AWS_REGION }} --exclude ".git/*" --exclude ".github/*" --debug
